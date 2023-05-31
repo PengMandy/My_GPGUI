@@ -1,0 +1,6 @@
+# pyCharm project
+.idea
+.pyc
+__pycache__
+*.xml
+\vnev
