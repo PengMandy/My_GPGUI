@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="encoderconnector">EncoderConnector</h1>
+<p>本專案主要功能為透過socket與NI的伺服器連線，以TCP方式接收編碼器(Encoder)的狀態值。本專案可接收的編碼器之狀態值如下：</p>
+<ul>
+<li>從NI伺服器上傳輸過來的資料之編號</li>
+<li>編碼器位置</li>
+<li>目前車輛移動距離</li>
+<li>車輛之車速</li>
+<li>車輛之車速的加速度</li>
+</ul>
+<hr>
+<h2 id="%E7%9B%AE%E9%8C%84">目錄</h2>
+<ul>
+<li><a href="#encoderconnector">EncoderConnector</a>
+<ul>
+<li><a href="#%E7%9B%AE%E9%8C%84">目錄</a></li>
+<li><a href="#%E6%AA%94%E6%A1%88%E8%AA%AA%E6%98%8E">檔案說明：</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E">使用說明</a>
+<ul>
+<li><a href="#%E9%A1%9E%E5%88%A5myencoderreader">類別<code>myEncoderReader</code></a></li>
+<li><a href="#%E9%A1%9E%E5%88%A5myencoderconnector">類別<code>myEncoderConnector</code></a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%89%E8%A3%9D">安裝</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8whl%E6%AA%94%E5%AE%89%E8%A3%9D">使用<code>whl</code>檔安裝</a></li>
+<li><a href="#%E6%8C%87%E5%AE%9A%E6%9C%AC%E5%B0%88%E6%A1%88%E9%80%A3%E7%B5%90%E7%B5%A6python">指定本專案連結給Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="%E6%AA%94%E6%A1%88%E8%AA%AA%E6%98%8E">檔案說明：</h2>
+<p>下表為本專案中目錄<code>EncoderConnector</code>中幾個重要檔案的用途：</p>
+<table>
+<thead>
+<tr>
+<th>檔名</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>myEncoderConnector.py</code></td>
+<td>該檔案實作類別<code>myEncoderConnector</code>，功能為透過socket來接受編碼器的狀態值</td>
+</tr>
+<tr>
+<td><code>myEncoderReader.py</code></td>
+<td>該檔案實作類別<code>myEncoderReader</code>，功能為以執行緒的方式使用<code>myEncoderConnector.py</code>來取得編碼器的狀態值</td>
+</tr>
+<tr>
+<td><code>myEncoderGenerator.py</code></td>
+<td>該檔案實作了類別<code>myEncoderGenerator</code>，該類別會產生假資料並透過socket傳輸出去，主要功能為測試<code>myEncoderConnector.py</code>與<code>myEncoderConnector.py</code></td>
+</tr>
+</tbody>
+</table>
+<p>本專案目錄下有四個檔案用於測試與示範該如何使用本專案的程式：</p>
+<table>
+<thead>
+<tr>
+<th>檔名</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>testEncoderGenerator_func.py</code></td>
+<td>該檔案示範了該如何使用類別<code>myEncoderGenerator</code>產生假資料，然後使用類別<code>myEncoderReader</code>來接受編碼器的狀態值</td>
+</tr>
+<tr>
+<td><code>testEncoderGenerator_object.py</code></td>
+<td>功能與<code>testEncoderGenerator_func.py</code>相同，但是該檔案以物件導向的方式來示範如何使用類別<code>myEncoderReader</code></td>
+</tr>
+<tr>
+<td><code>testEncoderReader_func.py</code></td>
+<td>該檔案示範了如何使用類別<code>myEncoderReader</code>來接受NI傳來的編碼器的狀態值</td>
+</tr>
+<tr>
+<td><code>testEncoderReader_object.py</code></td>
+<td>功能與<code>testEncoderReader_func.py</code>相同，但是該檔案以物件導向的方式來示範如何使用類別<code>myEncoderReader</code></td>
+</tr>
+<tr>
+<td><code>testEncoderConnector.py</code></td>
+<td>該檔案示範了如何使用<code>myEncoderConnector</code>透過sockt與伺服器連線，來取得編碼器的狀態值。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E">使用說明</h2>
+<h3 id="%E9%A1%9E%E5%88%A5myencoderreader">類別<code>myEncoderReader</code></h3>
+<p>這邊來說明如何使用類別<code>myEncoderReader</code>，該類別會執行一個執行緒，在這個執行緒中會持續接受NI傳輸的編碼器的狀態值。使用方式如下：</p>
+<ol>
+<li>
+<p>建立類別<code>myEncoderReader</code>的物件</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> EncoderConnector <span class="hljs-keyword">import</span> myEncoderReader
+
+oReader = myEncoderReader()
+</div></code></pre>
+<p>下表為說明類別<code>myEncoderReader</code>之建構子可傳入的參數：</p>
+<table>
+<thead>
+<tr>
+<th>參數名稱</th>
+<th>型態</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>strIP</td>
+<td>str</td>
+<td>用於指定伺服器的IP，預設是<code>192.168.1.178</code></td>
+</tr>
+<tr>
+<td>iPort</td>
+<td>int</td>
+<td>用於指定伺服器的Port，預設為<code>9000</code></td>
+</tr>
+<tr>
+<td>fUpdateTime</td>
+<td>float</td>
+<td>用於控制輸出編碼器狀態的更新率，單位是秒，預設是<code>5ms</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>請先宣告一個帶有僅一個參數的函數作為Callback function，該函數的功能為提供給類別<code>myEncoderReader</code>之物件一個介面，來把接受到的編碼器之狀態值拿來使用：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getStatus</span><span class="hljs-params">(dctStatus:dict)</span>:</span>
+    strSequence = dctStatus[<span class="hljs-string">"Sequence"</span>]
+    iStep = dctStatus[<span class="hljs-string">"Step"</span>]
+    fDistance = dctStatus[<span class="hljs-string">"Distance"</span>]
+    fEncoderSpeed = dctStatus[<span class="hljs-string">"EncoderSpeed"</span>]
+    fVehicleSpeed = dctStatus[<span class="hljs-string">"VehicleSpeed"</span>]
+    fVehicleAcceleration = dctStatus[<span class="hljs-string">"VehicleAcceleration"</span>]
+
+    <span class="hljs-string">"""
+    To do something
+    """</span> 
+    ...
+<span class="hljs-comment"># End of getStatus</span>
+</div></code></pre>
+<p>這邊需要注意一點，類別<code>myEncoderReader</code>之物件會傳入一個<code>dict</code>的變數當作Callback function的參數，該參數的內容如下表：</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>型態</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sequence</td>
+<td>str</td>
+<td>代表收到第幾筆狀態值</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>int</td>
+<td>代表編碼器的位置</td>
+</tr>
+<tr>
+<td>Distance</td>
+<td>float</td>
+<td>用以表示移動距離，單位是公尺(m)</td>
+</tr>
+<tr>
+<td>EncoderSpeed</td>
+<td>float</td>
+<td>用以表示編碼器的速度，單位：$\frac{編碼器位置}{秒}$</td>
+</tr>
+<tr>
+<td>VehicleSpeed</td>
+<td>float</td>
+<td>用以表示當前的車速，單位是$\frac{Km}{Hr}$</td>
+</tr>
+<tr>
+<td>VehicleAcceleration</td>
+<td>float</td>
+<td>用以表示當前車輛的加速度，單位是$\frac{Km}{{second}^2}$</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>將Callback function指定給類別<code>myEncoderReader</code>使用：</p>
+<pre class="hljs"><code><div>oReader.setCallback(getStatus)
+</div></code></pre>
+</li>
+<li>
+<p>呼叫成員函數<code>connectServer()</code>來與伺服器連線：</p>
+<pre class="hljs"><code><div>oReader.connectServer()
+</div></code></pre>
+</li>
+<li>
+<p>請啟動類別<code>myEncoderReader</code>之物件，來接受編碼器的狀態值：</p>
+<pre class="hljs"><code><div>oReader.start()
+</div></code></pre>
+</li>
+<li>
+<p>在確定不再使用類別<code>myEncoderReader</code>之物件，請關閉該類別的物件：</p>
+<pre class="hljs"><code><div>oReader.isRun = <span class="hljs-literal">False</span>
+oReader.join()
+</div></code></pre>
+</li>
+</ol>
+<p>最後提醒一下，這邊的教學採用函數導向，所以這邊的Callback function也是一個函數，可參考範例程式<code>testEncoderReader_func.py</code>。然而，實際上Callback function也可以是類別中的方法，用法可以參考範例程式<code>testEncoderReader_object.py</code>。</p>
+<h3 id="%E9%A1%9E%E5%88%A5myencoderconnector">類別<code>myEncoderConnector</code></h3>
+<p>類別<code>myEncoderConnector</code>是類別<code>myEncoderReader</code>的底層實作，該類別才是實際與NI的伺服器溝通的介面。接下來說明該如何使用類別<code>myEncoderConnector</code>：</p>
+<ol>
+<li>
+<p>建立類別<code>myEncoderConnector</code>之物件：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> EncoderConnector <span class="hljs-keyword">import</span> myEncoderConnector
+
+oEncoderConnector = myEncoderConnector()
+</div></code></pre>
+<p>下表為類別<code>myEncoderConnector</code>之建構子可傳入的參數：</p>
+<table>
+<thead>
+<tr>
+<th>參數名稱</th>
+<th>型態</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>strIP</td>
+<td>str</td>
+<td>用於指定伺服器的IP，預設是<code>192.168.1.178</code></td>
+</tr>
+<tr>
+<td>iPort</td>
+<td>int</td>
+<td>用於指定伺服器的Port，預設為<code>9000</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>呼叫成員函數<code>connect()</code>來與伺服器連線</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">try</span>:
+    oEncoderConnector.connect()
+<span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> oEx:
+    print(oEx)
+<span class="hljs-comment"># End of try-catch</span>
+</div></code></pre>
+</li>
+<li>
+<p>呼叫成員函數<code>obtainStatus()</code>來接受編碼器的狀態值</p>
+<pre class="hljs"><code><div>strSequence, iStep, fDistance, fEncoderSpeed, fVehicleSpeed, fVehicleAcceleration = oEncoderConnector.obtainStatus()
+</div></code></pre>
+<p>下表列出成員函數<code>obtainStatus()</code>每個回傳值的狀態與功用：</p>
+<table>
+<thead>
+<tr>
+<th>型態</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>str</td>
+<td>代表收到第幾筆狀態值</td>
+</tr>
+<tr>
+<td>int</td>
+<td>代表編碼器的位置</td>
+</tr>
+<tr>
+<td>float</td>
+<td>用以表示移動距離，單位是公尺(m)</td>
+</tr>
+<tr>
+<td>float</td>
+<td>用以表示編碼器的速度，單位：$\frac{編碼器位置}{秒}$</td>
+</tr>
+<tr>
+<td>float</td>
+<td>用以表示當前的車速，單位是$\frac{Km}{Hr}$</td>
+</tr>
+<tr>
+<td>float</td>
+<td>用以表示當前車輛的加速度，單位是$\frac{Km}{{second}^2}$</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>若不再使用，請關閉連線</p>
+<pre class="hljs"><code><div>oEncoderConnector.close()
+</div></code></pre>
+</li>
+</ol>
+<p>如果想看完整的程式碼，可以參考本專案目錄下的<code>testEncoderConnector.py</code>。</p>
+<h2 id="%E5%AE%89%E8%A3%9D">安裝</h2>
+<h3 id="%E4%BD%BF%E7%94%A8whl%E6%AA%94%E5%AE%89%E8%A3%9D">使用<code>whl</code>檔安裝</h3>
+<p>請依以下的步驟來安裝本專案：</p>
+<ol>
+<li>
+<p>使用下面的指令來產生<code>whl</code>檔：</p>
+<pre class="hljs"><code><div>python setup.py bdist_wheel
+</div></code></pre>
+</li>
+<li>
+<p><code>whl</code>檔將會存放於目錄<code>dist</code>中，請在終端機中切換目錄到<code>dist</code>，然後使用下面的指令來安裝：</p>
+<pre class="hljs"><code><div>pip install EncoderConnector*.whl
+</div></code></pre>
+</li>
+</ol>
+<h3 id="%E6%8C%87%E5%AE%9A%E6%9C%AC%E5%B0%88%E6%A1%88%E9%80%A3%E7%B5%90%E7%B5%A6python">指定本專案連結給Python</h3>
+<p>若在使用本專案來開發程式時，又希望測試本專案，可以使用這個方式來安裝。安裝方式為：</p>
+<pre class="hljs"><code><div>python setup.py develop
+</div></code></pre>
+<p>這個安裝方式和<code>whl</code>檔安裝最大的不同之處就在於，當更動本專案的程式碼時，前者什麼都不用做就可以使用到最新更動的程式碼，但是後者必須重新產生<code>whl</code>檔，並且透過該檔案來更新才行。</p>
+
+</body>
+</html>

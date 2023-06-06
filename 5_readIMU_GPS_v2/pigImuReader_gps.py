@@ -29,7 +29,7 @@ import logging
 PRINT_DEBUG = 0
 
 IMU_DATA_STRUCTURE = {
-    "NANO33_WX": np.zeros(1),
+    "NANO33_WX": np.zeros(1), # {[0]}
     "NANO33_WY": np.zeros(1),
     "NANO33_WZ": np.zeros(1),
     "ADXL_AX": np.zeros(1),

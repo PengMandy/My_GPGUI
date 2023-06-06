@@ -68,7 +68,7 @@ class mainWindow(QMainWindow):
         self.act_sp11 = ACTION_PIG()
         self.act_sp13 = ACTION_PIG()
         # self.imudata_file = cmn.data_manager(fnum=0)
-        self.imudata_file_auto = autoSave.atSave_PC_v2(fnum=0)   # 自動儲存檔案的類別
+        self.imudata_file_auto = autoSave.atSave_PC_v3(fnum=0)   # 自動儲存檔案的類別 (原本v2)
         self.pig_cali_menu = calibrationBlock()
         self.analysis_allan = analysis_Allan.analysis_allan_widget(['fog'])
         self.analysis_timing_plot = analysis_TimingPlot.analysis_timing_plot_widget(
@@ -379,7 +379,8 @@ class mainWindow(QMainWindow):
                                                  imudata['mSEC'][0])
             self.printGPS_Time(gps_time)
             self.imudata_file_auto.saveData(datalist, data_fmt)
-            self.imudata_file_auto.auto_create_folder(self.top.save_block.rb.isChecked())
+            self.imudata_file_auto.judgment_hh(self.top.save_block.rb.isChecked())  # 0605修改自動儲存
+            #self.imudata_file_auto.auto_create_folder(self.top.save_block.rb.isChecked())  # 判斷自動儲存的部分 (建資料夾的部分)
             self.plotdata(self.imudata, self.imudata_sp11["PIG_WZ"], self.imudata_sp13["PIG_WZ"])
 
     def plotdata(self, imudata, pig_sp11, pig_sp13):

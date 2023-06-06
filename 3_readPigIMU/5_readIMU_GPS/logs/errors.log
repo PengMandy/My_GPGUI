@@ -1,0 +1,54 @@
+2022-06-12 14:49:36 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 14:53:55 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 15:02:43 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 15:02:47 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 15:48:52 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 15:48:54 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 16:05:19 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 16:06:10 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 16:16:40 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 16:17:53 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:32:34 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:32:40 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:32:41 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:32:43 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:32:45 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:32:47 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:35:53 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:36:06 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:38:12 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:38:20 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:38:52 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:38:57 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:41:04 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:42:41 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:42:54 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:43:13 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:48:19 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-12 23:50:11 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:07:50 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:08:02 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:08:21 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:08:27 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-20 08:23:16 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-20 08:23:37 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-20 08:24:07 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-22 16:46:25 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-06 11:14:52 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-06 11:27:51 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-07 13:04:46 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-11 11:31:29 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-14 12:44:04 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-14 14:58:24 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-14 14:58:39 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-14 15:04:17 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-14 15:05:24 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-14 15:09:13 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM6 can not be found or can not be configured!
+2022-07-15 12:02:24 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-15 12:30:53 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-08-22 15:13:06 - main.myLib.mySerial.Connector - ERROR - IOError, the device:  can not be found or can not be configured!
+2022-08-22 16:53:59 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-08-23 18:19:50 - main.myLib.mySerial.Connector - ERROR - IOError, the device:  can not be found or can not be configured!
+2022-08-30 20:30:27 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-08-30 20:30:53 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-08-31 16:56:13 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.

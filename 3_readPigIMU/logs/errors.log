@@ -1,0 +1,128 @@
+2022-06-13 10:48:43 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:48:46 - main.myLib.mySerial.Connector - ERROR - serial read timeout, check if the input power is ON !
+2022-06-13 10:50:22 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:50:25 - main.myLib.mySerial.Connector - ERROR - serial read timeout, check if the input power is ON, close the GUI and re-excute.
+2022-06-13 10:51:24 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:58:48 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:59:00 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:59:15 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:59:33 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:59:39 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 10:59:57 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:00:01 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:00:10 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:00:13 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:00:41 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:00:51 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:01:06 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:01:22 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:04:50 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:04:54 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:05:07 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:05:14 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:05:27 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:05:33 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:06:25 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:06:27 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:06:41 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:06:45 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:07:15 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:07:20 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:13:17 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:13:22 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:14:17 - main.myLib.mySerial.Connector - ERROR - Port not open, please check!
+2022-06-13 11:14:17 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:14:17 - main.myLib.mySerial.Connector - ERROR - ERROR
+2022-06-13 11:26:59 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:27:23 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:27:37 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:28:06 - main.myLib.common - ERROR - file_manager: AttributeError
+2022-06-13 11:43:18 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-13 17:28:11 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-16 13:37:37 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-16 16:10:34 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-16 16:14:03 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-16 16:16:29 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-16 16:43:30 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM8 can not be found or can not be configured!
+2022-06-16 16:43:48 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM8 can not be found or can not be configured!
+2022-06-16 16:44:16 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-06-16 17:00:32 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM8 can not be found or can not be configured!
+2022-06-20 12:35:55 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-04 16:56:37 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-15 13:35:28 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-15 13:36:16 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-15 13:36:59 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-29 12:58:25 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-07-29 15:51:29 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-08-22 17:31:13 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-08-22 17:37:10 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-08-31 16:10:51 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM5 can not be found or can not be configured!
+2022-09-01 12:19:28 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-07 10:17:10 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM5 can not be found or can not be configured!
+2022-09-07 13:57:33 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM24 can not be found or can not be configured!
+2022-09-07 13:58:19 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-07 14:06:07 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-07 14:07:10 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM24 can not be found or can not be configured!
+2022-09-07 14:23:44 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-07 14:24:31 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-07 14:25:23 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-08 13:26:51 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-08 13:28:35 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-08 13:40:27 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-08 13:42:09 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-08 13:43:07 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-09-08 14:15:09 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM5 can not be found or can not be configured!
+2022-09-08 14:18:17 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM5 can not be found or can not be configured!
+2022-09-08 14:18:51 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM5 can not be found or can not be configured!
+2022-09-08 14:20:21 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM4 can not be found or can not be configured!
+2022-09-08 14:21:47 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM4 can not be found or can not be configured!
+2022-09-08 14:22:01 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM4 can not be found or can not be configured!
+2022-09-08 14:23:03 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM4 can not be found or can not be configured!
+2022-09-08 14:30:34 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM4 can not be found or can not be configured!
+2022-09-19 12:52:51 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM21 can not be found or can not be configured!
+2022-09-23 13:07:42 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-10-04 17:17:22 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-10-04 17:18:21 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-10-13 11:03:41 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2022-10-13 13:49:01 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM20 can not be found or can not be configured!
+2022-10-13 13:49:15 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM20 can not be found or can not be configured!
+2022-10-27 13:38:13 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-01-12 17:08:23 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM15 can not be found or can not be configured!
+2023-01-12 17:08:35 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM15 can not be found or can not be configured!
+2023-01-12 17:09:03 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM15 can not be found or can not be configured!
+2023-01-12 17:09:28 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-01-12 17:16:45 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-01-17 17:34:02 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-01-17 17:56:21 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-01-30 12:20:25 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-01-30 12:21:42 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-01-30 12:22:15 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-01 13:59:15 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-07 14:58:22 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-07 15:16:39 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-07 15:17:16 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-07 15:23:28 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
+2023-02-07 15:58:58 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-07 18:36:53 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-07 18:43:43 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
+2023-02-07 18:46:00 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
+2023-02-08 10:19:51 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 10:40:58 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 10:45:21 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 10:46:08 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 11:03:40 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 11:07:56 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 12:58:14 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:03:12 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:05:38 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:06:31 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:08:14 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:09:57 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:31:03 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:32:20 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-08 13:53:50 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-02-09 11:45:39 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM9 can not be found or can not be configured!
+2023-02-09 18:29:34 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
+2023-02-09 18:35:30 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
+2023-02-10 10:13:59 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM6 can not be found or can not be configured!
+2023-06-05 13:27:15 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
