@@ -48,6 +48,7 @@ IMU_DATA_STRUCTURE = {
     "mSEC": np.zeros(1)
 }
 
+
 HEADER_KVH = [0xFE, 0x81, 0xFF, 0x55]
 SENS_ADXL355_8G = 0.0000156
 SENS_NANO33_GYRO_250 = 0.00875
@@ -57,7 +58,6 @@ POS_ADXL355_AX = 4
 POS_NANO33_WX = 13
 POS_PIG = 25
 POS_CRC = 35
-POS_GPS = 39
 old = time.perf_counter_ns()
 
 
@@ -94,7 +94,11 @@ class pigImuReader(QThread):
         self.__callBack = None
         self.__crcFail = 0
         self.arrayNum = 10
-        self.__
+        self.dataRate = 100.0
+        self.__datacnt = 0 # 紀錄資料筆數
+        self.start_read = 0
+        self.first_sec = 0
+        self.first_sec_change = False
         self.__debug = debug_en
         self.__old_imudata = {k: (-1,) * len(IMU_DATA_STRUCTURE.get(k)) for k in set(IMU_DATA_STRUCTURE)}
         self.__imuoffset = {k: np.zeros(1) for k in set(IMU_DATA_STRUCTURE)}
@@ -294,7 +298,7 @@ class pigImuReader(QThread):
 
     def getImuData(self):
         head = getData.alignHeader_4B(self.__Connector, HEADER_KVH)
-        dataPacket = getData.getdataPacket(self.__Connector, head, 39)
+        dataPacket = getData.getdataPacket(self.__Connector, head, 39)   #原39個封包值
         # print([hex(x) for x in dataPacket])
 
         ADXL_AX, ADXL_AY, ADXL_AZ = cmn.readADXL355(dataPacket, EN=1, PRINT=0, POS_AX=POS_ADXL355_AX,
@@ -306,20 +310,49 @@ class pigImuReader(QThread):
 
         FPGA_TIME, ERR, STEP, PD_TEMP = cmn.readPIG(dataPacket, EN=1, PRINT=0, sf_a=self.sf_a, sf_b=self.sf_b,
                                                     POS_TIME=POS_PIG)
-        GPS_DATE, GPS_TIME, valid = cmn.readGPS(dataPacket, EN=1, PRINT=0, POS_data=POS_GPS)
         if not self.isCali:
             if self.isKal:
                 NANO_WZ = self.nano33_wz_kal.update(NANO_WZ)
                 STEP = self.pig_wz_kal.update(STEP)
 
-        is_gpstime_renew = (GPS_TIME != self.)
+        currentDataAndTime = datetime.now()
+        year = currentDataAndTime.year
+        mon = currentDataAndTime.month
+        day = currentDataAndTime.day
+        hour = currentDataAndTime.hour
+        min = currentDataAndTime.minute
+        sec = currentDataAndTime.second
+
+        if (self.start_read == 0):
+            '''PC Time'''
+            msec = int(currentDataAndTime.microsecond * 1e-3)
+            '''end of PC time'''
+            self.current_time = msec
+            self.start_read = 1
+            #self.__datacnt = msec/10
+            self.first_sec = sec
+            self.data_num = ((1000-msec) * 1e-3) * 90 #(剩下秒數 大約會傳輸筆數)
+            self.first_msec = msec
+        else:
+            self.current_time = self.current_time + ((1000-self.first_msec) / self.data_num)   # 用剩下秒數除以大約有幾筆資料，換算每一筆的間隔時間
+            if sec != self.first_sec:
+                self.current_time = self.current_time % 10
+                self.first_sec_change = True
+                self.first_sec = sec
+
+        if self.current_time >= 1000:
+            self.current_time = self.current_time - 1000
+        print("sec:" + str(sec))
+        print("read get data:" + str(self.current_time))
+
         # t = time.perf_counter()
         t = FPGA_TIME
         imudata = {"NANO33_WX": NANO_WX, "NANO33_WY": NANO_WY, "NANO33_WZ": NANO_WZ,
                    # "ADXL_AX": ADXL_AX, "ADXL_AY": ADXL_AY, "ADXL_AZ": ADXL_AZ,
                    "ADXL_AX": NANO_AX, "ADXL_AY": NANO_AY, "ADXL_AZ": NANO_AZ,
                    "PIG_ERR": ERR, "PIG_WZ": STEP, "PD_TEMP": PD_TEMP, "TIME": t,
-                   "YEAR"
+                   'YEAR': year, 'MON': mon, 'DAY': day, 'HOUR': hour,
+                   'MIN': min, 'SEC': sec, 'mSEC': self.current_time
                    }
         return dataPacket, imudata
 
@@ -403,17 +436,6 @@ class pigImuReader(QThread):
 
                 self.time_pass_check(self.time_pass_flag, imudata["TIME"])
 
-                '''PC Time'''
-                currentDataAndTime = datetime.now()
-                imudata['YEAR'] = currentDataAndTime.year
-                imudata['MON'] = currentDataAndTime.month
-                imudata['DAY'] = currentDataAndTime.day
-                imudata['HOUR'] = currentDataAndTime.hour
-                imudata['MIN'] = currentDataAndTime.minute
-                imudata['SEC'] = currentDataAndTime.second
-                imudata['mSEC'] = int(currentDataAndTime.microsecond * 1e-3)
-                '''end of PC time'''
-
                 # if self.time_pass_flag:
                 imudataArray["TIME"] = np.append(imudataArray["TIME"], imudata["TIME"])
                 imudataArray["ADXL_AX"] = np.append(imudataArray["ADXL_AX"], imudata["ADXL_AX"])
@@ -465,7 +487,8 @@ class pigImuReader(QThread):
             # imudataArray["TIME"] = imudataArray["TIME"] - t0
 
             self.offset_setting(self.__imuoffset)
-            imudataArray = cmn.dictOperation(imudataArray, self.__imuoffset, "SUB", IMU_DATA_STRUCTURE)
+            #imudataArray = cmn.dictOperation(imudataArray, self.__imuoffset, "SUB", IMU_DATA_STRUCTURE)
+            imudataArray = cmn.dictOperation(imudataArray, self.__imuoffset, "SUB_for_PC_Time", IMU_DATA_STRUCTURE)
             if self.__callBack is not None:
                 self.__callBack(imudataArray)
 

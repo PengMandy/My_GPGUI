@@ -152,9 +152,8 @@ class mainWindow(QMainWindow):
     def updateComPort(self):
         portNum, portList = self.__connector.portList()
         self.top.usb.addPortItems(portNum, portList)
-        gc.collect()  # 調用垃圾回收操作，將該函式遍歷的Object，收集並回收不再引用的值
-
-        self.top.usb.bt_connect.setEnabled(True) # 判斷是否已連接儀器，並顯示連接btn
+        if portNum != 0:
+            self.top.usb.bt_connect.setEnabled(True) # 判斷是否已連接儀器，並顯示連接btn
 
 
     def selectComPort(self):
@@ -203,10 +202,11 @@ class mainWindow(QMainWindow):
         self.imudata_file_auto.start = True
         self.imudata_file_auto.create_data_folder(True)
         self.imudata_file_auto.auto_create_folder(True)
-        if OUTPUT_ONE_AXIS:
-            self.imudata_file_auto.write_line('time,wx,wy,fog,ax,ay,az,T')
-        else:
-            self.imudata_file_auto.write_line('time,fog,wx,wy,wz,ax,ay,az,T')
+        #
+        # if OUTPUT_ONE_AXIS:
+        #     self.imudata_file_auto.write_line('time,wx,wy,fog,ax,ay,az,T')
+        # else:
+        #     self.imudata_file_auto.write_line('time,fog,wx,wy,wz,ax,ay,az,T')
 
     def stop(self):
         # self.resetFPGATimer()
@@ -217,6 +217,7 @@ class mainWindow(QMainWindow):
         #self.imudata_file.close()
         self.press_stop = True
         self.first_run_flag = True
+        self.act.start_read = 0
         print('press stop')
 
     @property
@@ -278,17 +279,21 @@ class mainWindow(QMainWindow):
             cmn.print_debug(debug_info, self.__debug)
             # print(imudata["PIG_WZ"])
 
-            if OUTPUT_ONE_AXIS:
-                datalist = [imudata["TIME"], imudata["NANO33_WX"], imudata["NANO33_WY"], imudata["PIG_WZ"]
+            # if OUTPUT_ONE_AXIS:
+            #     datalist = [imudata["TIME"], imudata["NANO33_WX"], imudata["NANO33_WY"], imudata["PIG_WZ"]
+            #         , imudata["ADXL_AX"], imudata["ADXL_AY"], imudata["ADXL_AZ"], imudata["PD_TEMP"]]
+            #     data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.1f"
+            # else:
+            #     datalist = [imudata["TIME"], imudata["PIG_WZ"], imudata["NANO33_WX"], imudata["NANO33_WY"],
+            #                 imudata["NANO33_WZ"]
+            #         , imudata["ADXL_AX"], imudata["ADXL_AY"], imudata["ADXL_AZ"], imudata["PD_TEMP"]]
+            #     data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.1f"
+
+            datalist = [imudata["TIME"], imudata["NANO33_WX"], imudata["NANO33_WY"], imudata["PIG_WZ"]
                     , imudata["ADXL_AX"], imudata["ADXL_AY"], imudata["ADXL_AZ"], imudata["PD_TEMP"]
                     , imudata["YEAR"], imudata["MON"], imudata["DAY"], imudata["HOUR"]
                     , imudata["MIN"], imudata["SEC"], imudata["mSEC"]]
-                data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.1f,%d,%d,%d,%d,%d,%d,%d"
-            else:
-                datalist = [imudata["TIME"], imudata["PIG_WZ"], imudata["NANO33_WX"], imudata["NANO33_WY"],
-                            imudata["NANO33_WZ"]
-                    , imudata["ADXL_AX"], imudata["ADXL_AY"], imudata["ADXL_AZ"], imudata["PD_TEMP"]]
-                data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.1f,%d,%d,%d,%d,%d,%d,%d"
+            data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.1f,%d,%d,%d,%d,%d,%d,%d"
 
             # 撈取PC的時間
             gps_time = '%d/%d/%d %d:%d:%d.%d' % (imudata['YEAR'][0], imudata['MON'][0], imudata['DAY'][0],
@@ -297,7 +302,7 @@ class mainWindow(QMainWindow):
 
             self.printGPS_Time(gps_time)
             self.imudata_file_auto.saveData(datalist, data_fmt)
-            self.imudata_file_auto.judgment_hh(self.top.save_block.rb.isChecked())
+            self.imudata_file_auto.judgment_hh(True)
             self.plotdata_v2(self.imudata)
             self.printUpdateRate(self.imudata["TIME"])
             # print(len(self.imudata["TIME"]))

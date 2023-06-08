@@ -535,6 +535,25 @@ def dictOperation(dictA: dict, dictB: dict, mode: str, dictStruct: dict):
         # end of for-loop of k
         return rt
 
+    if mode == "SUB_for_PC_Time":
+        print_debug("", PRINT_DEBUG)
+        print_debug("MODE = " + mode, PRINT_DEBUG)
+        print_debug("dictA= " + str(dictA), PRINT_DEBUG)
+        print_debug("dictB= " + str(dictB), PRINT_DEBUG)
+        print_debug("rt= " + str(rt), PRINT_DEBUG)
+        print_debug("", PRINT_DEBUG)
+        for k in dictStruct:
+            print_debug("k= " + str(k), PRINT_DEBUG)
+            print_debug("dictA[k]= " + str(dictA[k]), PRINT_DEBUG)
+            print_debug("dictB[k]= " + str(dictB[k]), PRINT_DEBUG)
+            if k == 'YEAR' or k == 'MON' or k == 'DAY' or k == 'HOUR' or k == 'MIN' or k == 'SEC' or k == 'mSEC':
+                rt[k] = np.array(dictA[k])
+            else:
+                rt[k] = np.array(dictA[k] - dictB[k])
+            print_debug("rt[k]= " + str(rt[k]) + "\n", PRINT_DEBUG)
+        # end of for-loop of k
+        return rt
+
     elif mode == "APPEND":
         # rt = {k: [np.empty(0) for i in range(len(dictStruct[k]))] for k in dictStruct}
         print_debug("", PRINT_DEBUG)
