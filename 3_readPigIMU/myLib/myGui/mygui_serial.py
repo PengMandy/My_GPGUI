@@ -177,6 +177,83 @@ class usbConnect_auto():
         # self.lb_status.setAlignment(Qt.AlignCenter)
         # self.lb_comDisp.show()
 
+class usbConnect_auto_v2():
+    def __init__(self, group_name='Connect COM port'):
+        self.__portList = None
+        self.__groupBox = QGroupBox(group_name)
+        self.__groupBox.setFont(QFont('Arial', 10))
+        self.__port = {"Key1":''}
+        # self.__groupBox.setCheckable(True)
+        self.bt_update = QPushButton("update")
+        self.bt_connect = QPushButton('connect')
+        self.bt_disconnect = QPushButton('disconnect')
+        self.bt_disconnect.setEnabled(False)
+        # self.cb = QComboBox()
+        self.lb_status = QLabel(" ")
+        self.lb_comDisp = QLabel(" ")
+
+    def layout(self):
+        layout = QGridLayout()
+        layout.addWidget(self.bt_update, 0, 0, 1, 1)
+        # layout.addWidget(self.cb, 0, 1, 1, 1)
+        layout.addWidget(self.bt_connect, 0, 1, 1, 1)
+        layout.addWidget(self.bt_disconnect, 0, 2, 1, 1)
+        layout.addWidget(self.lb_comDisp, 1, 0, 1, 2)
+        layout.addWidget(self.lb_status, 1, 2, 1, 2)
+        self.__groupBox.setLayout(layout)
+        return self.__groupBox
+
+    def autoComport(self, num, ports):
+        self.__portList = ports
+        #self.cb.clear()
+        logger.debug('port_num: %d' % num)
+        # port = dict()
+        if num > 0:
+            for i in range(num):
+                # print(ports[i].serial_number)
+                # if ports[i].serial_number == 'AQ6YNJG3A':  # SP9
+                #     self.__port[self.__key1] = ports[i].device
+                if ports[i].serial_number == 'A176665B50573554322E3120FF161A11':  # SP10
+                    self.__port["Key1"] = ports[i].device
+
+        logger.debug('autoComport: %s\n' % self.__port)
+        self.showPortName_v2(self.__port)
+        return self.__port
+
+    def showPortName(self, port):
+        # idx = self.cb.currentIndex()
+        self.lb_comDisp.setText(self.__key1 + ':' + port[self.__key1] + ', ' + self.__key2 + ':' + port[self.__key2] +
+                                ', ' + self.__key3 + ':' + port[self.__key3])
+        # return self.__portList[idx].device
+
+    def showPortName_v2(self, port):
+        # idx = self.cb.currentIndex()
+        self.lb_comDisp.setText("連接序列: %s" % port["Key1"])
+        # return self.__portList[idx].device
+
+    def updateStatusLabel(self, is_open):
+        self.bt_connect.setEnabled(not is_open)
+        self.bt_disconnect.setEnabled(is_open)
+
+        if is_open:
+            self.SetConnectText(Qt.blue, "is connected")
+            # self.lb_status.setText("is connected")
+        else:
+            self.SetConnectText(Qt.red, "is disconnected")
+            # self.lb_status.setText("is disconnected")
+
+    def show(self):
+        QB = self.layout()
+        QB.show()
+
+    def SetConnectText(self, color, text):
+        pe = QPalette()
+        pe.setColor(QPalette.WindowText, color)
+        self.lb_status.setPalette(pe)
+        self.lb_status.setFont(QFont("Arial", 12))
+        self.lb_status.setText(text)
+        # self.lb_status.setAlignment(Qt.AlignCenter)
+        # self.lb_comDisp.show()
 
 # class dataSaveBlock(QGroupBox):
 #     def __init__(self, name=""):

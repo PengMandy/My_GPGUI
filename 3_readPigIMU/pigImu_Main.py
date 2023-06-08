@@ -66,11 +66,11 @@ class mainWindow(QMainWindow):
         # -------menu obj------#
         self.pig_parameter_widget = None
         self.pig_cali_menu = calibrationBlock()
-        self.pig_initial_setting_menu = myRadioButton.radioButtonBlock_2('SYNC MODE', 'OFF', 'ON', True)  # True
+        self.pig_initial_setting_menu = myRadioButton.radioButtonBlock_2('SYNC MODE', 'OFF', 'ON', False)  # True
         # means setting 'OFF' state value to True
         self.analysis_allan = analysis_Allan.analysis_allan_widget(['fog', 'wx', 'wy', 'wz'])
         self.analysis_timing_plot = analysis_TimingPlot.analysis_timing_plot_widget(
-            ['fog', 'wx', 'wy', 'wz', 'ax', 'ay', 'az', 'T'])
+            ['wx', 'wy', 'wz', 'ax', 'ay', 'az', 'yy', 'MM', 'dd', 'hh', 'mm', 'ss', 'ms'])
         # -------end of menu obj------#
         self.linkfunction()
         self.act.arrayNum = 10
@@ -79,21 +79,23 @@ class mainWindow(QMainWindow):
 
         self.__debug = debug_en
         self.t_start = time.perf_counter()
+        self.autoComPort()  # 直接自動撈取COM Port，且撈取對應的儀器名稱
 
     def mainUI(self):
         self.setCentralWidget(self.top)
 
     def linkfunction(self):
         # usb connection
-        self.top.usb.bt_update.clicked.connect(self.updateComPort)
-        self.top.usb.cb.currentIndexChanged.connect(self.selectComPort)
+        # self.top.usb.bt_update.clicked.connect(self.updateComPort)
+        self.top.usb.bt_update.clicked.connect(self.autoComPort)
+        #self.top.usb.cb.currentIndexChanged.connect(self.selectComPort)
         self.top.usb.bt_connect.clicked.connect(self.connect)
         self.top.usb.bt_disconnect.clicked.connect(self.disconnect)
         # bt connection
         self.top.read_bt.clicked.connect(self.start)
         self.top.stop_bt.clicked.connect(self.stop)
         # rb connection
-        self.top.kal_filter_rb.toggled.connect(lambda: self.update_kalFilter_en(self.top.kal_filter_rb))
+        #self.top.kal_filter_rb.toggled.connect(lambda: self.update_kalFilter_en(self.top.kal_filter_rb))
         # pyqtSignal connection
         self.act.imudata_qt.connect(self.collectData)
         self.act.imuThreadStop_qt.connect(self.imuThreadStopDetect)
@@ -155,9 +157,14 @@ class mainWindow(QMainWindow):
         if portNum != 0:
             self.top.usb.bt_connect.setEnabled(True) # 判斷是否已連接儀器，並顯示連接btn
 
-
     def selectComPort(self):
         self.__portName = self.top.usb.selectPort()
+
+    def autoComPort(self):
+        portNum, portList = self.__connector.portList()
+        self.__portName = self.top.usb.autoComport(portNum, portList)
+        if portNum != 0:
+            self.top.usb.bt_connect.setEnabled(True)
 
     def is_port_open_status_manager(self, open):
         # print("port open: ", open)
@@ -166,7 +173,7 @@ class mainWindow(QMainWindow):
         self.top.setBtnEnable(open)
 
     def connect(self):
-        is_port_open = self.act.connect(self.__connector, self.__portName, 230400)
+        is_port_open = self.act.connect(self.__connector, self.__portName["Key1"], 230400)
         self.is_port_open_qt.emit(is_port_open)
         self.pig_parameter_widget = pig_parameters_widget(self.act, self.top.para_block.le_filename.text() + '.json')
         self.act.isCali_w, self.act.isCali_a = self.pig_cali_menu.cali_status()  # update calibration flag to act
@@ -336,7 +343,6 @@ class mainWindow(QMainWindow):
             factor = 3600
         else:
             factor = 1
-
         self.top.plot1.ax.setData(imudata["TIME"], imudata["NANO33_WZ"] * factor)  # 為mems的值
 
         self.top.plot2.ax.setData(imudata["ADXL_AX"])

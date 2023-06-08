@@ -27,7 +27,8 @@ class pigImuWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.usb = usbConnect()
+        #self.usb = usbConnect()
+        self.usb = usbConnect_auto_v2()
         self.read_bt = QPushButton("read")
         self.read_bt.setEnabled(False)
         self.stop_bt = QPushButton("stop")
