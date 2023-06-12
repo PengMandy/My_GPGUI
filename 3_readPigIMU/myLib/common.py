@@ -22,14 +22,17 @@ PRINT_DEBUG = 0
 
 def readPIG(dataPacket, EN=1, POS_TIME=25, sf_a=1, sf_b=0, PRINT=0):
     if EN:
-        temp_time = dataPacket[POS_TIME:POS_TIME + 4]
-        temp_err = dataPacket[POS_TIME + 4:POS_TIME + 8]
-        temp_fog = dataPacket[POS_TIME + 8:POS_TIME + 12]
-        temp_PD_temperature = dataPacket[POS_TIME + 12:POS_TIME + 14]
-        fpga_time = convert2Unsign_4B(temp_time) * 1e-4
-        err_mv = convert2Sign_4B(temp_err)# * (4000 / 8192)
-        step_dps = convert2Sign_4B(temp_fog) * sf_a + sf_b
-        PD_temperature = convert2Temperature(temp_PD_temperature)
+        try:
+            temp_time = dataPacket[POS_TIME:POS_TIME + 4]
+            temp_err = dataPacket[POS_TIME + 4:POS_TIME + 8]
+            temp_fog = dataPacket[POS_TIME + 8:POS_TIME + 12]
+            temp_PD_temperature = dataPacket[POS_TIME + 12:POS_TIME + 14]
+            fpga_time = convert2Unsign_4B(temp_time) * 1e-4
+            err_mv = convert2Sign_4B(temp_err)# * (4000 / 8192)
+            step_dps = convert2Sign_4B(temp_fog) * sf_a + sf_b
+            PD_temperature = convert2Temperature(temp_PD_temperature)
+        except IndexError:
+            return 10000, 10000, 10000, 10000
     else:
         fpga_time = 0
         err_mv = 0
@@ -84,18 +87,21 @@ def readPIG(dataPacket, EN=1, POS_TIME=25, sf_a=1, sf_b=0, PRINT=0):
 
 def readNANO33(dataPacket, EN, dataLen=2, POS_WX=13, sf_xlm=1.0, sf_gyro=1.0, PRINT=0):
     if EN:
-        temp_nano33_wx = dataPacket[POS_WX:POS_WX + dataLen]
-        temp_nano33_wy = dataPacket[POS_WX + 2:POS_WX + 2 + dataLen]
-        temp_nano33_wz = dataPacket[POS_WX + 4:POS_WX + 4 + dataLen]
-        temp_nano33_ax = dataPacket[POS_WX + 6:POS_WX + 6 + dataLen]
-        temp_nano33_ay = dataPacket[POS_WX + 8:POS_WX + 8 + dataLen]
-        temp_nano33_az = dataPacket[POS_WX + 10:POS_WX + 10 + dataLen]
-        nano33_wx = round(convert2Sign_nano33(temp_nano33_wx) * sf_gyro, 5)
-        nano33_wy = round(convert2Sign_nano33(temp_nano33_wy) * sf_gyro, 5)
-        nano33_wz = round(convert2Sign_nano33(temp_nano33_wz) * sf_gyro, 5)
-        nano33_ax = round(convert2Sign_nano33(temp_nano33_ax) * sf_xlm, 5)
-        nano33_ay = round(convert2Sign_nano33(temp_nano33_ay) * sf_xlm, 5)
-        nano33_az = round(convert2Sign_nano33(temp_nano33_az) * sf_xlm, 5)
+        try:
+            temp_nano33_wx = dataPacket[POS_WX:POS_WX + dataLen]
+            temp_nano33_wy = dataPacket[POS_WX + 2:POS_WX + 2 + dataLen]
+            temp_nano33_wz = dataPacket[POS_WX + 4:POS_WX + 4 + dataLen]
+            temp_nano33_ax = dataPacket[POS_WX + 6:POS_WX + 6 + dataLen]
+            temp_nano33_ay = dataPacket[POS_WX + 8:POS_WX + 8 + dataLen]
+            temp_nano33_az = dataPacket[POS_WX + 10:POS_WX + 10 + dataLen]
+            nano33_wx = round(convert2Sign_nano33(temp_nano33_wx) * sf_gyro, 5)
+            nano33_wy = round(convert2Sign_nano33(temp_nano33_wy) * sf_gyro, 5)
+            nano33_wz = round(convert2Sign_nano33(temp_nano33_wz) * sf_gyro, 5)
+            nano33_ax = round(convert2Sign_nano33(temp_nano33_ax) * sf_xlm, 5)
+            nano33_ay = round(convert2Sign_nano33(temp_nano33_ay) * sf_xlm, 5)
+            nano33_az = round(convert2Sign_nano33(temp_nano33_az) * sf_xlm, 5)
+        except IndexError:
+            return 10000, 10000, 10000, 10000, 10000, 10000
     else:
         nano33_wx = 0.2
         nano33_wy = 0.2
@@ -129,7 +135,7 @@ def readADXL355(dataPacket, dataLen=3, POS_AX=4, EN=1, sf=1.0, PRINT=0):
             adxl355_y = round(convert2Sign_adxl355(temp_adxl355_y) * sf, 5)
             adxl355_z = round(convert2Sign_adxl355(temp_adxl355_z) * sf, 5)
         except IndexError:
-            return 100, 100, 100
+            return 10000, 10000, 10000
     else:
         adxl355_x = 9.8
         adxl355_y = 9.8

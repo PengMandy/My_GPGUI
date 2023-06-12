@@ -67,6 +67,13 @@ class Connector:
 
         return portNum, portlist
 
+    # def judgment_COMPort(self):
+    #     portlistInfo = serial.tools.list_ports.comports()
+    #     if len(portlistInfo) == 0:
+    #         return False
+    #     else:
+    #         return True
+
     def connect(self):
         self.__ser.baudrate = self.__baudRate
         self.__ser.port = self.__portName
@@ -144,18 +151,15 @@ class Connector:
     @portConnectStatus.setter
     def portConnectStatus(self, status):
         if status == True:
-            self.__portConnectStatus = 1
+            self.__portConnectStatus = 1  # COM Port被拔除了
         else:
-            self.__portConnectStatus = 0
+            self.__portConnectStatus = 0  # COM Port未被拔除
 
     def read(self):
         return self.__ser.read()
 
     def readInputBuffer(self):
         # print("input buffer: %d" % self.__ser.in_waiting)
-        # if win32.DWORD == 0:
-        #     self.__PortStatus = 1
-        #     return 0
         return self.__ser.in_waiting
 
     # End of Connector::readInputBuffer

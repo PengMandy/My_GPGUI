@@ -242,7 +242,7 @@ class usbConnect_auto_v2():
 
             self.showPortName_v2(self.cb.currentText())
         elif num == 0:
-            self.showPortName_v2(None)
+            self.showPortName_doesnot_connect()
 
     def selectPort(self):
         idx = self.cb.currentIndex()
@@ -257,14 +257,14 @@ class usbConnect_auto_v2():
         # return self.__portList[idx].device
 
     def showPortName_v2(self, port_name):
-        # idx = self.cb.currentIndex()
-        if port_name == None:
-            self.lb_comDisp.setStyleSheet("color: red;")
-            self.lb_comDisp.setText("請檢查連接的序列是否有連接")
-        else:
-            self.lb_comDisp.setStyleSheet("color: black;")
-            self.lb_comDisp.setText("連接序列: %s" % port_name)
+        self.lb_comDisp.setStyleSheet("color: black;")
+        self.lb_comDisp.setText("連接序列: %s" % port_name)
         # return self.__portList[idx].device
+
+    def showPortName_doesnot_connect(self):
+        self.cb.clear()
+        self.lb_comDisp.setStyleSheet("color: red;")
+        self.lb_comDisp.setText("請檢查連接的序列是否有連接")
 
     def updateStatusLabel(self, is_open):
         self.bt_connect.setEnabled(not is_open)

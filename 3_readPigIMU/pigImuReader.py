@@ -300,79 +300,92 @@ class pigImuReader(QThread):
 
     def getImuData(self):
         head = getData.alignHeader_4B(self.__Connector, HEADER_KVH)
-        if head == 1:
-            self.__Connector.portConnectStatus(True)
+        if head == 1:  # 當head撈取不到時，會執行此功能，代表COM Port可能被拔掉了
+            self.__Connector.portConnectStatus = True
             self.get_Port_connect_status()
-
-        dataPacket = getData.getdataPacket(self.__Connector, head, 39)   #原39個封包值
-        # print([hex(x) for x in dataPacket])
-        self.get_Port_connect_status()
-
-        ADXL_AX, ADXL_AY, ADXL_AZ = cmn.readADXL355(dataPacket, EN=1, PRINT=0, POS_AX=POS_ADXL355_AX,
-                                                    sf=SENS_ADXL355_8G)
-
-        NANO_WX, NANO_WY, NANO_WZ, \
-        NANO_AX, NANO_AY, NANO_AZ = cmn.readNANO33(dataPacket, EN=1, PRINT=0, POS_WX=POS_NANO33_WX,
-                                                   sf_xlm=SENS_NANO33_AXLM_4G,
-                                                   sf_gyro=SENS_NANO33_GYRO_500)
-
-        FPGA_TIME, ERR, STEP, PD_TEMP = cmn.readPIG(dataPacket, EN=1, PRINT=0, sf_a=self.sf_a, sf_b=self.sf_b,
-                                                    POS_TIME=POS_PIG)
-        if not self.isCali:
-            if self.isKal:
-                NANO_WZ = self.nano33_wz_kal.update(NANO_WZ)
-                STEP = self.pig_wz_kal.update(STEP)  # 20230608 已改為用meme的值，因此可以不用使用
-
-        currentDataAndTime = datetime.now()
-        year = currentDataAndTime.year
-        mon = currentDataAndTime.month
-        day = currentDataAndTime.day
-        hour = currentDataAndTime.hour
-        min = currentDataAndTime.minute
-        sec = currentDataAndTime.second
-
-        if (self.start_read == 0):
-            '''PC Time'''
-            msec = int(currentDataAndTime.microsecond * 1e-3)
-            '''end of PC time'''
-            self.current_time = msec
-            self.start_read = 1
-            #self.__datacnt = msec/10
-            self.first_sec = sec
-            self.data_num = ((1000-msec) * 1e-3) * 90 #(剩下秒數 大約會傳輸筆數)
-            self.first_msec = msec
+            return head, {}
         else:
-            self.current_time = self.current_time + ((1000-self.first_msec) / self.data_num)   # 用剩下秒數除以大約有幾筆資料，換算每一筆的間隔時間
-            if sec != self.first_sec:
-                self.current_time = self.current_time % 10
-                #self.first_sec_change = True
+            dataPacket = getData.getdataPacket(self.__Connector, head, 39)   #原39個封包值
+            # print([hex(x) for x in dataPacket])
+            if dataPacket == head:   # 當dataPacket撈取不到時，就會執行此功能，代表COM Port可能被拔掉了(撈取不到值)
+                self.get_Port_connect_status()
+
+            ADXL_AX, ADXL_AY, ADXL_AZ = cmn.readADXL355(dataPacket, EN=1, PRINT=0, POS_AX=POS_ADXL355_AX,
+                                                        sf=SENS_ADXL355_8G)
+            if ADXL_AX == 10000 and ADXL_AY == 10000 and ADXL_AZ == 10000:
+                self.__Connector.portConnectStatus = True
+                self.get_Port_connect_status()
+
+            NANO_WX, NANO_WY, NANO_WZ, \
+            NANO_AX, NANO_AY, NANO_AZ = cmn.readNANO33(dataPacket, EN=1, PRINT=0, POS_WX=POS_NANO33_WX,
+                                                       sf_xlm=SENS_NANO33_AXLM_4G,
+                                                       sf_gyro=SENS_NANO33_GYRO_500)
+            if NANO_WX == 10000 and NANO_WY == 10000 and NANO_WZ == 10000 and NANO_AX == 10000 and NANO_AY == 10000 and NANO_AZ == 10000:
+                self.__Connector.portConnectStatus = True
+                self.get_Port_connect_status()
+
+            FPGA_TIME, ERR, STEP, PD_TEMP = cmn.readPIG(dataPacket, EN=1, PRINT=0, sf_a=self.sf_a, sf_b=self.sf_b,
+                                                        POS_TIME=POS_PIG)
+            if FPGA_TIME == 10000 and ERR == 10000 and STEP == 10000 and PD_TEMP == 10000:
+                self.__Connector.portConnectStatus = True
+                self.get_Port_connect_status()
+
+            if not self.isCali:
+                if self.isKal:
+                    NANO_WZ = self.nano33_wz_kal.update(NANO_WZ)
+                    STEP = self.pig_wz_kal.update(STEP)  # 20230608 已改為用meme的值，因此可以不用使用
+
+            currentDataAndTime = datetime.now()
+            year = currentDataAndTime.year
+            mon = currentDataAndTime.month
+            day = currentDataAndTime.day
+            hour = currentDataAndTime.hour
+            min = currentDataAndTime.minute
+            sec = currentDataAndTime.second
+
+            if (self.start_read == 0):
+                '''PC Time'''
+                msec = int(currentDataAndTime.microsecond * 1e-3)
+                '''end of PC time'''
+                self.current_time = msec
+                self.start_read = 1
+                #self.__datacnt = msec/10
                 self.first_sec = sec
+                self.data_num = ((1000-msec) * 1e-3) * 90 #(剩下秒數 大約會傳輸筆數)
+                self.first_msec = msec
+            else:
+                self.current_time = self.current_time + ((1000-self.first_msec) / self.data_num)   # 用剩下秒數除以大約有幾筆資料，換算每一筆的間隔時間
+                if sec != self.first_sec:
+                    self.current_time = self.current_time % 10
+                    #self.first_sec_change = True
+                    self.first_sec = sec
 
-        if self.current_time >= 1000:
-            self.current_time = self.current_time - 1000
-        print("sec:" + str(sec))
-        print("read get data:" + str(self.current_time))
+            if self.current_time >= 1000:
+                self.current_time = self.current_time - 1000
+            print("sec:" + str(sec))
+            print("read get data:" + str(self.current_time))
 
-        # t = time.perf_counter()
-        t = FPGA_TIME
-        imudata = {"NANO33_WX": NANO_WX, "NANO33_WY": NANO_WY, "NANO33_WZ": NANO_WZ,
-                   # "ADXL_AX": ADXL_AX, "ADXL_AY": ADXL_AY, "ADXL_AZ": ADXL_AZ,
-                   "ADXL_AX": NANO_AX, "ADXL_AY": NANO_AY, "ADXL_AZ": NANO_AZ,
-                   "PIG_ERR": ERR, "PIG_WZ": STEP, "PD_TEMP": PD_TEMP, "TIME": t,
-                   'YEAR': year, 'MON': mon, 'DAY': day, 'HOUR': hour,
-                   'MIN': min, 'SEC': sec, 'mSEC': self.current_time
-                   }
-        return dataPacket, imudata
+            # t = time.perf_counter()
+            t = FPGA_TIME
+            imudata = {"NANO33_WX": NANO_WX, "NANO33_WY": NANO_WY, "NANO33_WZ": NANO_WZ,
+                       # "ADXL_AX": ADXL_AX, "ADXL_AY": ADXL_AY, "ADXL_AZ": ADXL_AZ,
+                       "ADXL_AX": NANO_AX, "ADXL_AY": NANO_AY, "ADXL_AZ": NANO_AZ,
+                       "PIG_ERR": ERR, "PIG_WZ": STEP, "PD_TEMP": PD_TEMP, "TIME": t,
+                       'YEAR': year, 'MON': mon, 'DAY': day, 'HOUR': hour,
+                       'MIN': min, 'SEC': sec, 'mSEC': self.current_time
+                       }
+
+            return dataPacket, imudata
 
     def readInputBuffer(self):
         return self.__Connector.readInputBuffer()
 
-    def readInputBuffer_v2(self):
-        I_Buffer = self.__Connector.readInputBuffer()
-        if I_Buffer == None:  # 20230609 判斷COM Port是否有連接
-            self.Portstatus_qt.emit(False)
-            return 0
-        return I_Buffer
+    # def readInputBuffer_v2(self):
+    #     I_Buffer = self.__Connector.readInputBuffer()
+    #     if I_Buffer == None:  # 20230609 判斷COM Port是否有連接
+    #         self.Portstatus_qt.emit(False)
+    #         return 0
+    #     return I_Buffer
 
     def do_cali(self, dictContainer, cali_times):
         if self.isCali:
@@ -397,6 +410,7 @@ class pigImuReader(QThread):
     def get_Port_connect_status(self):
         self.__PortStatus = self.__Connector.portConnectStatus
         if self.__PortStatus == 1:
+            self.isRun = False
             self.Portstatus_qt.emit(False)
 
     def run(self):
@@ -429,6 +443,11 @@ class pigImuReader(QThread):
                 t1 = time.perf_counter()
 
                 dataPacket, imudata = self.getImuData()
+                if not self.isRun:
+                    self.stopIMU()
+                    self.imuThreadStop_qt.emit()
+                    # self.first_run_flag = True
+                    break
 
                 # if self.first_run_flag and (imudata['TIME'] > 2):
                 #     print('\n in act: first_run_flag is ', self.first_run_flag)

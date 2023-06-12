@@ -176,9 +176,25 @@ class mainWindow(QMainWindow):
         if portNum != 0:
             self.top.usb.bt_connect.setEnabled(True) # 判斷是否已連接儀器，並顯示連接btn
 
+    # 判斷COM Port是否有鬆脫的狀況，並執行此功能
     def autoDetectComport(self, status):
-        self.top.usb.showPortName_v2(None)
-        self.stop()
+        self.top.usb.showPortName_doesnot_connect()
+        self.imudata_file_auto.close_hour_folder()
+        self.imudata_file_auto.reset_hh_reg()
+        self.top.save_block.rb.setChecked(False)
+        # self.imudata_file.close()
+        self.press_stop = True
+        self.first_run_flag = True
+        self.act.start_read = 0
+        self.__connector.portConnectStatus = False
+        self.act.quit()
+        self.act.wait()
+        self.disconnect()
+        # while True:
+        #     if self.__connector.judgment_COMPort() == True:
+        #         self.top.usb.showPortName_v2(self.__portName)
+        #         self.__connector.portConnectStatus = False
+        #         break
 
     def is_port_open_status_manager(self, open):
         # print("port open: ", open)
@@ -267,7 +283,8 @@ class mainWindow(QMainWindow):
             # print('collectData after: ', len(imudata['TIME']), end=', ')
             # print(imudata['TIME'])
             # self.first_run_flag = False
-            input_buf = self.act.readInputBuffer()
+            self.act.get_Port_connect_status() # 判斷COM Port是否有被拔除
+            #input_buf = self.act.readInputBuffer()
             t0 = time.perf_counter()
             # imudata = cmn.dictOperation(imudata, imuoffset, "SUB", IMU_DATA_STRUCTURE)
             self.printPdTemperature(imudata["PD_TEMP"][0])
@@ -296,7 +313,9 @@ class mainWindow(QMainWindow):
                 self.imudata["PIG_ERR"] = self.imudata["PIG_ERR"][self.act.arrayNum:self.act.arrayNum + 1000]
                 self.imudata["PD_TEMP"] = self.imudata["PD_TEMP"][self.act.arrayNum:self.act.arrayNum + 1000]
             t2 = time.perf_counter()
-            debug_info = "MAIN: ," + str(input_buf) + ", " + str(round((t2 - t0) * 1000, 5)) + ", " \
+            # debug_info = "MAIN: ," + str(input_buf) + ", " + str(round((t2 - t0) * 1000, 5)) + ", " \
+            #              + str(round((t1 - t0) * 1000, 5)) + ", " + str(round((t2 - t1) * 1000, 5))
+            debug_info = "MAIN: ," + str(round((t2 - t0) * 1000, 5)) + ", " \
                          + str(round((t1 - t0) * 1000, 5)) + ", " + str(round((t2 - t1) * 1000, 5))
             cmn.print_debug(debug_info, self.__debug)
             # print(imudata["PIG_WZ"])

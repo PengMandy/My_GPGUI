@@ -31,7 +31,7 @@ def alignHeader_4B(comportObj, header):
             except:
                 logger.error('alignHeader_4B Error')
                 return 1
-                sys.exit()
+                #sys.exit()
                 break
 
             # print(datain)
@@ -59,6 +59,8 @@ def alignHeader_7B(comportObj, header):
 
 def getdataPacket(comportObj, head, rbytes=25):
     rdata = comportObj.readBinaryList(rbytes)
+    if rdata == None:  # 判斷COM Port是否被拔除了 20230612
+        return head
     imuPacket = head + rdata
     return imuPacket
 # End of getdataPacket
