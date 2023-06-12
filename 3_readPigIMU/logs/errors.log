@@ -126,3 +126,60 @@
 2023-02-09 18:35:30 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
 2023-02-10 10:13:59 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM6 can not be found or can not be configured!
 2023-06-05 13:27:15 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-06-08 11:59:52 - main.myLib.mySerial.Connector - ERROR - IOError, the device:  can not be found or can not be configured!
+2023-06-08 12:06:16 - main.myLib.mySerial.Connector - ERROR - IOError, the device:  can not be found or can not be configured!
+2023-06-09 12:38:58 - main.myLib.mySerial.Connector - ERROR - IOError, the device: COM4 can not be found or can not be configured!
+2023-06-09 15:38:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 15:38:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 15:38:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 15:38:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 15:38:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 15:38:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:22 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:22 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:22 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:22 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:22 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:22 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:33 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:33 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:33 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:33 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:33 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:53:33 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:58:55 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:58:55 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:58:55 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:58:55 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:58:55 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 16:58:55 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:00:31 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:00:31 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:00:31 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:00:31 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:00:31 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:00:31 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:11 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:51 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:51 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:51 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:51 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:51 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:08:51 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:13:43 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:13:43 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:13:43 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:13:43 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:13:43 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 17:13:43 - main.myLib.mySerial.Connector - ERROR - PC doesn't connect Port.
+2023-06-09 18:17:23 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-06-09 18:19:21 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-06-09 18:19:21 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
+2023-06-09 18:52:48 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.
+2023-06-09 18:52:48 - main.myLib.mySerial.getData - ERROR - alignHeader_4B Error
+2023-06-12 09:42:02 - main.myLib.mySerial.Connector - ERROR - serial read timeout: check if the input power is ON, close the GUI and re-excute.

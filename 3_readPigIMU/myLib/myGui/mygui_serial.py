@@ -182,22 +182,23 @@ class usbConnect_auto_v2():
         self.__portList = None
         self.__groupBox = QGroupBox(group_name)
         self.__groupBox.setFont(QFont('Arial', 10))
-        self.__port = {"Key1":''}
+        self.__port = {"Key0":["請檢查PC是否有連接儀器"], "Key1":[]}
         # self.__groupBox.setCheckable(True)
         self.bt_update = QPushButton("update")
         self.bt_connect = QPushButton('connect')
+        self.bt_connect.setEnabled(False)  # 20230606 判斷是否update儀器
         self.bt_disconnect = QPushButton('disconnect')
         self.bt_disconnect.setEnabled(False)
-        # self.cb = QComboBox()
+        self.cb = QComboBox()
         self.lb_status = QLabel(" ")
         self.lb_comDisp = QLabel(" ")
 
     def layout(self):
         layout = QGridLayout()
         layout.addWidget(self.bt_update, 0, 0, 1, 1)
-        # layout.addWidget(self.cb, 0, 1, 1, 1)
-        layout.addWidget(self.bt_connect, 0, 1, 1, 1)
-        layout.addWidget(self.bt_disconnect, 0, 2, 1, 1)
+        layout.addWidget(self.cb, 0, 1, 1, 1)
+        layout.addWidget(self.bt_connect, 0, 2, 1, 1)
+        layout.addWidget(self.bt_disconnect, 0, 3, 1, 1)
         layout.addWidget(self.lb_comDisp, 1, 0, 1, 2)
         layout.addWidget(self.lb_status, 1, 2, 1, 2)
         self.__groupBox.setLayout(layout)
@@ -205,7 +206,7 @@ class usbConnect_auto_v2():
 
     def autoComport(self, num, ports):
         self.__portList = ports
-        #self.cb.clear()
+        self.cb.clear()
         logger.debug('port_num: %d' % num)
         # port = dict()
         if num > 0:
@@ -214,11 +215,40 @@ class usbConnect_auto_v2():
                 # if ports[i].serial_number == 'AQ6YNJG3A':  # SP9
                 #     self.__port[self.__key1] = ports[i].device
                 if ports[i].serial_number == 'A176665B50573554322E3120FF161A11':  # SP10
-                    self.__port["Key1"] = ports[i].device
+                    self.__port["Key1"].append(ports[i].device)
+
 
         logger.debug('autoComport: %s\n' % self.__port)
-        self.showPortName_v2(self.__port)
+        #self.showPortName_v2(self.__port, get_port_num)
         return self.__port
+
+    def autoComport_v2(self, num, ports):
+        self.__portList = ports
+        self.cb.clear()
+        logger.debug('port_num: %d' % num)
+        # port = dict()
+        if num > 0:
+            for i in range(num):
+                # if ports[i].serial_number == 'A176665B50573554322E3120FF161A11':  # SP10
+                #    self.__port["Key1"].append(ports[i].device)
+                self.cb.addItem(ports[i].device)
+                logger.debug('autoComport port_name: %s' % ports[i].device)
+                logger.debug('autoComport ports.description: %s' % ports[i].description)
+                logger.debug('autoComport ports.hwid: %s' % ports[i].hwid)
+                logger.debug('autoComport ports.serial_number: %s' % ports[i].serial_number)
+                logger.debug('autoComport ports.product: %s' % ports[i].product)
+                logger.debug('autoComport ports.manufacturer: %s' % ports[i].manufacturer)
+                logger.debug('autoComport ports.location: %s\n' % ports[i].location)
+
+            self.showPortName_v2(self.cb.currentText())
+        elif num == 0:
+            self.showPortName_v2(None)
+
+    def selectPort(self):
+        idx = self.cb.currentIndex()
+        #self.lb_comDisp.setText(self.__portList[idx].description)
+        self.showPortName_v2(self.__portList[idx].device)
+        return self.__portList[idx].device
 
     def showPortName(self, port):
         # idx = self.cb.currentIndex()
@@ -226,9 +256,14 @@ class usbConnect_auto_v2():
                                 ', ' + self.__key3 + ':' + port[self.__key3])
         # return self.__portList[idx].device
 
-    def showPortName_v2(self, port):
+    def showPortName_v2(self, port_name):
         # idx = self.cb.currentIndex()
-        self.lb_comDisp.setText("連接序列: %s" % port["Key1"])
+        if port_name == None:
+            self.lb_comDisp.setStyleSheet("color: red;")
+            self.lb_comDisp.setText("請檢查連接的序列是否有連接")
+        else:
+            self.lb_comDisp.setStyleSheet("color: black;")
+            self.lb_comDisp.setText("連接序列: %s" % port_name)
         # return self.__portList[idx].device
 
     def updateStatusLabel(self, is_open):
@@ -400,10 +435,11 @@ class calibrationBlock(QGroupBox):
         # self.setCheckable(True)
         self.cb_cali_w = QCheckBox('calibrate gyro')
         self.cb_cali_a = QCheckBox('calibrate accelerometer')
-        self.cb_cali_w.setChecked(True)
-        self.isCali_w = True
-        self.cb_cali_a.stateChanged.connect(lambda: self.cbstate_connect(self.cb_cali_a))
-        self.cb_cali_w.stateChanged.connect(lambda: self.cbstate_connect(self.cb_cali_w))
+        # 20230608 關閉校正功能
+        # self.cb_cali_w.setChecked(True)
+        # self.isCali_w = True
+        #self.cb_cali_a.stateChanged.connect(lambda: self.cbstate_connect(self.cb_cali_a))
+        #self.cb_cali_w.stateChanged.connect(lambda: self.cbstate_connect(self.cb_cali_w))
 
         layout = QVBoxLayout()
         layout.addWidget(self.cb_cali_w)

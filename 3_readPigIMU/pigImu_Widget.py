@@ -39,10 +39,10 @@ class pigImuWidget(QWidget):
         self.pd_temp_lb = displayOneBlock('PD Temp.')
         self.data_rate_lb = displayOneBlock('Data Rate')
         self.logo_lb = logo('./aegiverse_logo_bk.jpg')
-        self.kal_filter_rb = QRadioButton('Kalman Filter')
+        #self.kal_filter_rb = QRadioButton('Kalman Filter')
         # self.plot1_showWz_cb = checkBoxBlock_2('Wz', 'pig', 'mems') 0605 關閉
         self.gpstime_lb = displayOneBlock('Date (GPS Date in UTC)', label_size=8)
-        self.plot1_unit_rb = radioButtonBlock_2('Unit', 'dph', 'dps')
+        #self.plot1_unit_rb = radioButtonBlock_2('Unit', 'dph', 'dps')
         # self.plot1 = pgGraph_1_2(color1="w", color2="r", title="FOG_WZ VS MEMS_WZ") 0605修改
         self.plot1 = pgGraph_1(color=(255, 0, 0), title="MEMS_WZ")
         self.plot2 = pgGraph_1(color=(255, 0, 0), title="MEMS_AX [g]")
@@ -62,7 +62,7 @@ class pigImuWidget(QWidget):
         layout.addWidget(self.pd_temp_lb, 1, 5, 1, 1)
         layout.addWidget(self.data_rate_lb, 1, 6, 1, 2)
         layout.addWidget(self.logo_lb, 0, 13, 2, 7)
-        layout.addWidget(self.kal_filter_rb, 0, 4, 1, 1)
+        #layout.addWidget(self.kal_filter_rb, 0, 4, 1, 1)
         # 角速度
         layout.addWidget(self.plot1, 2, 0, 2, 10)
         layout.addWidget(self.plot5, 4, 0, 2, 10)
@@ -73,7 +73,7 @@ class pigImuWidget(QWidget):
         layout.addWidget(self.plot4, 6, 10, 2, 18)
         # layout.addWidget(self.plot1_showWz_cb, 1, 2, 1, 2) 0605關閉
         layout.addWidget(self.gpstime_lb, 1, 2, 1, 2)
-        layout.addWidget(self.plot1_unit_rb, 1, 0, 1, 2)
+        #layout.addWidget(self.plot1_unit_rb, 1, 0, 1, 2)
 
         # layout.addWidget(self.plot5, 8, 10, 2, 10)
         # layout.addWidget(self.plot6, 10, 10, 2, 10)

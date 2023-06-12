@@ -66,6 +66,7 @@ class pigImuReader(QThread):
         imudata_qt = pyqtSignal(object)
         imuThreadStop_qt = pyqtSignal()
         buffer_qt = pyqtSignal(int)
+        Portstatus_qt = pyqtSignal(bool)
 
     def __init__(self, portName: str = "None", boolCaliw=False, boolCalia=False, baudRate: int = 230400,
                  debug_en: bool = 0):
@@ -77,7 +78,7 @@ class pigImuReader(QThread):
         self.first_run_flag = True
         self.pass_flag = False
         self.nano33_wz_kal = filter.kalman_1D()
-        self.pig_wz_kal = filter.kalman_1D()
+        self.pig_wz_kal = filter.kalman_1D()  # 20230608 關閉(FOG)
         self.__isCali_a = boolCalia
         self.__isCali_w = boolCaliw
         self.sf_a = 1
@@ -90,15 +91,15 @@ class pigImuReader(QThread):
         self.__portName = portName
         self.__baudRate = baudRate
         self.__isRun = True
-        # self.__isCali = False
+        self.__isCali = False
         self.__callBack = None
         self.__crcFail = 0
         self.arrayNum = 10
-        self.dataRate = 100.0
+        self.dataRate = 100.0  # 1秒會傳輸的資料筆數
         self.__datacnt = 0 # 紀錄資料筆數
         self.start_read = 0
-        self.first_sec = 0
-        self.first_sec_change = False
+        self.first_sec = 0  # 20230607 添加
+        #self.first_sec_change = False  # 20230607 添加 判斷第一次秒數變化
         self.__debug = debug_en
         self.__old_imudata = {k: (-1,) * len(IMU_DATA_STRUCTURE.get(k)) for k in set(IMU_DATA_STRUCTURE)}
         self.__imuoffset = {k: np.zeros(1) for k in set(IMU_DATA_STRUCTURE)}
@@ -253,6 +254,7 @@ class pigImuReader(QThread):
         # print(cmd, end=', ')
         # print([i for i in data])
         self.__Connector.write(bytearray([0xAB, 0xBA]))
+
         self.__Connector.write(data)
         self.__Connector.write(bytearray([0x55, 0x56]))
         cmn.wait_ms(150)
@@ -298,11 +300,17 @@ class pigImuReader(QThread):
 
     def getImuData(self):
         head = getData.alignHeader_4B(self.__Connector, HEADER_KVH)
+        if head == 1:
+            self.__Connector.portConnectStatus(True)
+            self.get_Port_connect_status()
+
         dataPacket = getData.getdataPacket(self.__Connector, head, 39)   #原39個封包值
         # print([hex(x) for x in dataPacket])
+        self.get_Port_connect_status()
 
         ADXL_AX, ADXL_AY, ADXL_AZ = cmn.readADXL355(dataPacket, EN=1, PRINT=0, POS_AX=POS_ADXL355_AX,
                                                     sf=SENS_ADXL355_8G)
+
         NANO_WX, NANO_WY, NANO_WZ, \
         NANO_AX, NANO_AY, NANO_AZ = cmn.readNANO33(dataPacket, EN=1, PRINT=0, POS_WX=POS_NANO33_WX,
                                                    sf_xlm=SENS_NANO33_AXLM_4G,
@@ -313,7 +321,7 @@ class pigImuReader(QThread):
         if not self.isCali:
             if self.isKal:
                 NANO_WZ = self.nano33_wz_kal.update(NANO_WZ)
-                STEP = self.pig_wz_kal.update(STEP)
+                STEP = self.pig_wz_kal.update(STEP)  # 20230608 已改為用meme的值，因此可以不用使用
 
         currentDataAndTime = datetime.now()
         year = currentDataAndTime.year
@@ -337,7 +345,7 @@ class pigImuReader(QThread):
             self.current_time = self.current_time + ((1000-self.first_msec) / self.data_num)   # 用剩下秒數除以大約有幾筆資料，換算每一筆的間隔時間
             if sec != self.first_sec:
                 self.current_time = self.current_time % 10
-                self.first_sec_change = True
+                #self.first_sec_change = True
                 self.first_sec = sec
 
         if self.current_time >= 1000:
@@ -359,6 +367,13 @@ class pigImuReader(QThread):
     def readInputBuffer(self):
         return self.__Connector.readInputBuffer()
 
+    def readInputBuffer_v2(self):
+        I_Buffer = self.__Connector.readInputBuffer()
+        if I_Buffer == None:  # 20230609 判斷COM Port是否有連接
+            self.Portstatus_qt.emit(False)
+            return 0
+        return I_Buffer
+
     def do_cali(self, dictContainer, cali_times):
         if self.isCali:
             print('do_cali')
@@ -379,7 +394,13 @@ class pigImuReader(QThread):
             if time_in < 0.8:
                 self.time_pass_flag = True
 
+    def get_Port_connect_status(self):
+        self.__PortStatus = self.__Connector.portConnectStatus
+        if self.__PortStatus == 1:
+            self.Portstatus_qt.emit(False)
+
     def run(self):
+        self.__Connector.portConnectStatus = False
         logging.basicConfig(level=100)
         t0 = time.perf_counter()
         while True:
@@ -395,14 +416,16 @@ class pigImuReader(QThread):
             imudataArray = {k: np.empty(0) for k in set(IMU_DATA_STRUCTURE)}
 
             for i in range(self.arrayNum):
-                input_buf = self.readInputBuffer()
-                self.buffer_qt.emit(input_buf)
+                self.get_Port_connect_status()
+                # 顯示read buffer size的部分
+                #input_buf = self.readInputBuffer()
+                #self.buffer_qt.emit(input_buf)
                 # while self.__Connector.readInputBuffer() < self.arrayNum * 10:
-                while not self.__Connector.readInputBuffer():
-                    # print(self.__Connector.readInputBuffer())
-                    # print("No input data!")
-                    # cmn.wait_ms(500)
-                    pass
+                # while not self.__Connector.readInputBuffer():
+                #     # print(self.__Connector.readInputBuffer())
+                #     # print("No input data!")
+                #     # cmn.wait_ms(500)
+                #     pass
                 t1 = time.perf_counter()
 
                 dataPacket, imudata = self.getImuData()
@@ -475,7 +498,10 @@ class pigImuReader(QThread):
 
                 t5 = time.perf_counter()
 
-                debug_info = "ACT: ," + str(input_buf) + ", " + str(round((t5 - t1) * 1000, 5)) + ", " \
+                # debug_info = "ACT: ," + str(input_buf) + ", " + str(round((t5 - t1) * 1000, 5)) + ", " \
+                #              + str(round((t2 - t1) * 1000, 5)) + ", " + str(round((t3 - t2) * 1000, 5)) + ", " \
+                #              + str(round((t4 - t3) * 1000, 5)) + ", " + str(round((t5 - t4) * 1000, 5))
+                debug_info = "ACT: ," + str(round((t5 - t1) * 1000, 5)) + ", " \
                              + str(round((t2 - t1) * 1000, 5)) + ", " + str(round((t3 - t2) * 1000, 5)) + ", " \
                              + str(round((t4 - t3) * 1000, 5)) + ", " + str(round((t5 - t4) * 1000, 5))
                 cmn.print_debug(debug_info, self.__debug)
@@ -488,7 +514,7 @@ class pigImuReader(QThread):
 
             self.offset_setting(self.__imuoffset)
             #imudataArray = cmn.dictOperation(imudataArray, self.__imuoffset, "SUB", IMU_DATA_STRUCTURE)
-            imudataArray = cmn.dictOperation(imudataArray, self.__imuoffset, "SUB_for_PC_Time", IMU_DATA_STRUCTURE)
+            imudataArray = cmn.dictOperation(imudataArray, self.__imuoffset, "SUB", IMU_DATA_STRUCTURE)
             if self.__callBack is not None:
                 self.__callBack(imudataArray)
 
@@ -515,6 +541,13 @@ class pigImuReader(QThread):
     def offset_setting(self, imuoffset):
         imuoffset["TIME"] = [0]
         imuoffset["PD_TEMP"] = [0]
+        imuoffset["YEAR"] = [0]
+        imuoffset["MON"] = [0]
+        imuoffset["DAY"] = [0]
+        imuoffset["HOUR"] = [0]
+        imuoffset["MIN"] = [0]
+        imuoffset["SEC"] = [0]
+        imuoffset["mSEC"] = [0]
         if not self.isCali_w:
             imuoffset["NANO33_WX"] = [0]
             imuoffset["NANO33_WY"] = [0]

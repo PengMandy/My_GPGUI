@@ -120,13 +120,16 @@ def readNANO33(dataPacket, EN, dataLen=2, POS_WX=13, sf_xlm=1.0, sf_gyro=1.0, PR
 
 def readADXL355(dataPacket, dataLen=3, POS_AX=4, EN=1, sf=1.0, PRINT=0):
     if EN:
-        temp_adxl355_x = dataPacket[POS_AX:POS_AX + dataLen]
-        temp_adxl355_y = dataPacket[POS_AX + 3:POS_AX + 3 + dataLen]
-        temp_adxl355_z = dataPacket[POS_AX + 6:POS_AX + 6 + dataLen]
-        adxl355_x = round(convert2Sign_adxl355(temp_adxl355_x) * sf, 5)
-        # adxl355_x = temp_adxl355_x[0]<<24 | temp_adxl355_x[1]<<16 | temp_adxl355_x[2]<<8 | temp_adxl355_y[0]
-        adxl355_y = round(convert2Sign_adxl355(temp_adxl355_y) * sf, 5)
-        adxl355_z = round(convert2Sign_adxl355(temp_adxl355_z) * sf, 5)
+        try:
+            temp_adxl355_x = dataPacket[POS_AX:POS_AX + dataLen]
+            temp_adxl355_y = dataPacket[POS_AX + 3:POS_AX + 3 + dataLen]
+            temp_adxl355_z = dataPacket[POS_AX + 6:POS_AX + 6 + dataLen]
+            adxl355_x = round(convert2Sign_adxl355(temp_adxl355_x) * sf, 5)
+            # adxl355_x = temp_adxl355_x[0]<<24 | temp_adxl355_x[1]<<16 | temp_adxl355_x[2]<<8 | temp_adxl355_y[0]
+            adxl355_y = round(convert2Sign_adxl355(temp_adxl355_y) * sf, 5)
+            adxl355_z = round(convert2Sign_adxl355(temp_adxl355_z) * sf, 5)
+        except IndexError:
+            return 100, 100, 100
     else:
         adxl355_x = 9.8
         adxl355_y = 9.8
@@ -531,25 +534,6 @@ def dictOperation(dictA: dict, dictB: dict, mode: str, dictStruct: dict):
             print_debug("dictA[k]= " + str(dictA[k]), PRINT_DEBUG)
             print_debug("dictB[k]= " + str(dictB[k]), PRINT_DEBUG)
             rt[k] = np.array(dictA[k] - dictB[k])
-            print_debug("rt[k]= " + str(rt[k]) + "\n", PRINT_DEBUG)
-        # end of for-loop of k
-        return rt
-
-    if mode == "SUB_for_PC_Time":
-        print_debug("", PRINT_DEBUG)
-        print_debug("MODE = " + mode, PRINT_DEBUG)
-        print_debug("dictA= " + str(dictA), PRINT_DEBUG)
-        print_debug("dictB= " + str(dictB), PRINT_DEBUG)
-        print_debug("rt= " + str(rt), PRINT_DEBUG)
-        print_debug("", PRINT_DEBUG)
-        for k in dictStruct:
-            print_debug("k= " + str(k), PRINT_DEBUG)
-            print_debug("dictA[k]= " + str(dictA[k]), PRINT_DEBUG)
-            print_debug("dictB[k]= " + str(dictB[k]), PRINT_DEBUG)
-            if k == 'YEAR' or k == 'MON' or k == 'DAY' or k == 'HOUR' or k == 'MIN' or k == 'SEC' or k == 'mSEC':
-                rt[k] = np.array(dictA[k])
-            else:
-                rt[k] = np.array(dictA[k] - dictB[k])
             print_debug("rt[k]= " + str(rt[k]) + "\n", PRINT_DEBUG)
         # end of for-loop of k
         return rt

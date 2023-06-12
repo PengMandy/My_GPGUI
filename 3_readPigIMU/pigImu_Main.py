@@ -60,7 +60,7 @@ class mainWindow(QMainWindow):
         self.first_run_flag = True
         #self.imudata_file = cmn.data_manager(fnum=0)
         self.imudata_file_auto = autoSave.atSave_PC_v3(fnum=0)
-        self.act.isCali = True
+        self.act.isCali = False  # 地震不用用到校正的功能
         self.menu = self.menuBar()
         self.pig_menu = pig_menu_manager(self.menu, self)
         # -------menu obj------#
@@ -79,7 +79,7 @@ class mainWindow(QMainWindow):
 
         self.__debug = debug_en
         self.t_start = time.perf_counter()
-        self.autoComPort()  # 直接自動撈取COM Port，且撈取對應的儀器名稱
+        self.autoComPort_v2()  # 直接自動撈取COM Port，且撈取對應的儀器名稱
 
     def mainUI(self):
         self.setCentralWidget(self.top)
@@ -87,8 +87,8 @@ class mainWindow(QMainWindow):
     def linkfunction(self):
         # usb connection
         # self.top.usb.bt_update.clicked.connect(self.updateComPort)
-        self.top.usb.bt_update.clicked.connect(self.autoComPort)
-        #self.top.usb.cb.currentIndexChanged.connect(self.selectComPort)
+        self.top.usb.bt_update.clicked.connect(self.autoComPort_v2)
+        self.top.usb.cb.currentIndexChanged.connect(self.selectComPort)
         self.top.usb.bt_connect.clicked.connect(self.connect)
         self.top.usb.bt_disconnect.clicked.connect(self.disconnect)
         # bt connection
@@ -101,6 +101,7 @@ class mainWindow(QMainWindow):
         self.act.imuThreadStop_qt.connect(self.imuThreadStopDetect)
         self.act.buffer_qt.connect(self.printBuffer)
         self.is_port_open_qt.connect(self.is_port_open_status_manager)
+        self.act.Portstatus_qt.connect(self.autoDetectComport)
         # menu trigger connection
         self.pig_menu.action_trigger_connect([self.show_parameters,
                                               self.show_calibration_menu,
@@ -139,6 +140,9 @@ class mainWindow(QMainWindow):
     def printBuffer(self, val):
         self.top.buffer_lb.lb.setText(str(val))
 
+    def printBuffer_GPS(self):
+        self.top.buffer_lb.lb.setText(str(self.act.readInputBuffer()))
+
     def printGPS_Time(self, val):
         self.top.gpstime_lb.lb.setText(val)
 
@@ -160,11 +164,21 @@ class mainWindow(QMainWindow):
     def selectComPort(self):
         self.__portName = self.top.usb.selectPort()
 
-    def autoComPort(self):
+    # def autoComPort(self):
+    #     portNum, portList = self.__connector.portList()
+    #     self.__portName = self.top.usb.autoComport(portNum, portList)
+    #     if self.__portName["Key1"] != []:
+    #         self.top.usb.bt_connect.setEnabled(True) # 判斷是否已連接儀器，並顯示連接btn
+
+    def autoComPort_v2(self):
         portNum, portList = self.__connector.portList()
-        self.__portName = self.top.usb.autoComport(portNum, portList)
+        self.top.usb.autoComport_v2(portNum, portList)
         if portNum != 0:
-            self.top.usb.bt_connect.setEnabled(True)
+            self.top.usb.bt_connect.setEnabled(True) # 判斷是否已連接儀器，並顯示連接btn
+
+    def autoDetectComport(self, status):
+        self.top.usb.showPortName_v2(None)
+        self.stop()
 
     def is_port_open_status_manager(self, open):
         # print("port open: ", open)
@@ -173,9 +187,10 @@ class mainWindow(QMainWindow):
         self.top.setBtnEnable(open)
 
     def connect(self):
-        is_port_open = self.act.connect(self.__connector, self.__portName["Key1"], 230400)
+        is_port_open = self.act.connect(self.__connector, self.__portName, 230400)
         self.is_port_open_qt.emit(is_port_open)
-        self.pig_parameter_widget = pig_parameters_widget(self.act, self.top.para_block.le_filename.text() + '.json')
+        #self.pig_parameter_widget = pig_parameters_widget(self.act, self.top.para_block.le_filename.text() + '.json')
+        self.pig_parameter_widget = pig_parameters_widget(self.act, "parameters_SP10.json")
         self.act.isCali_w, self.act.isCali_a = self.pig_cali_menu.cali_status()  # update calibration flag to act
         self.act.isExtMode = self.pig_initial_setting_menu.btn_status
         # print(self.act.isExtMode)
@@ -204,7 +219,7 @@ class mainWindow(QMainWindow):
         # self.imudata_file_.name = file_name
         # self.imudata_file.open(self.top.save_block.rb.isChecked())
 
-        file_name = str(pathlib.Path().absolute())
+        file_name = str(pathlib.Path().absolute())  # 抓取此執行檔案的位置，且不包含此層的檔案名稱
         self.imudata_file_auto.data_path = file_name
         self.imudata_file_auto.start = True
         self.imudata_file_auto.create_data_folder(True)
@@ -297,10 +312,10 @@ class mainWindow(QMainWindow):
             #     data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.1f"
 
             datalist = [imudata["TIME"], imudata["NANO33_WX"], imudata["NANO33_WY"], imudata["PIG_WZ"]
-                    , imudata["ADXL_AX"], imudata["ADXL_AY"], imudata["ADXL_AZ"], imudata["PD_TEMP"]
+                    , imudata["ADXL_AX"], imudata["ADXL_AY"], imudata["ADXL_AZ"]
                     , imudata["YEAR"], imudata["MON"], imudata["DAY"], imudata["HOUR"]
                     , imudata["MIN"], imudata["SEC"], imudata["mSEC"]]
-            data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.1f,%d,%d,%d,%d,%d,%d,%d"
+            data_fmt = "%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%d,%d,%d,%d,%d,%d,%d"
 
             # 撈取PC的時間
             gps_time = '%d/%d/%d %d:%d:%d.%d' % (imudata['YEAR'][0], imudata['MON'][0], imudata['DAY'][0],
@@ -339,17 +354,19 @@ class mainWindow(QMainWindow):
 
     def plotdata_v2(self, imudata):
         # print('plotdata: ', imudata['TIME'])
-        if self.top.plot1_unit_rb.btn_status == 'dph':
-            factor = 3600
-        else:
-            factor = 1
-        self.top.plot1.ax.setData(imudata["TIME"], imudata["NANO33_WZ"] * factor)  # 為mems的值
+        # if self.top.plot1_unit_rb.btn_status == 'dph':
+        #     factor = 3600
+        # else:
+        #     factor = 1
+        #self.top.plot1.ax.setData(imudata["TIME"], imudata["NANO33_WZ"] * factor)  # 為mems的值
 
-        self.top.plot2.ax.setData(imudata["ADXL_AX"])
-        self.top.plot3.ax.setData(imudata["ADXL_AY"])
-        self.top.plot4.ax.setData(imudata["ADXL_AZ"])
-        self.top.plot5.ax.setData(imudata["NANO33_WX"])
-        self.top.plot6.ax.setData(imudata["NANO33_WY"])
+        # 20230608 修改
+        self.top.plot1.ax.setData(imudata["TIME"], imudata["NANO33_WZ"])
+        self.top.plot2.ax.setData(imudata["TIME"], imudata["ADXL_AX"])
+        self.top.plot3.ax.setData(imudata["TIME"], imudata["ADXL_AY"])
+        self.top.plot4.ax.setData(imudata["TIME"], imudata["ADXL_AZ"])
+        self.top.plot5.ax.setData(imudata["TIME"], imudata["NANO33_WX"])
+        self.top.plot6.ax.setData(imudata["TIME"], imudata["NANO33_WY"])
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -1,0 +1,3 @@
+#2023/06/09 17:13:43
+time,wx,wy,wz,ax,ay,az,yy,MM,dd,hh,mm,ss,ms
+#2023/06/09 17:13:43

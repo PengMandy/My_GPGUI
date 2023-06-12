@@ -2,6 +2,9 @@
 """ ####### log stuff creation, always on the top ########  """
 import builtins
 import logging
+
+from serial import win32
+
 if hasattr(builtins, 'LOGGER_NAME'):
     logger_name = builtins.LOGGER_NAME
 else:
@@ -27,6 +30,7 @@ class Connector:
         self.__baudRate = baudRate
         self.__is_open = False
         self.__ser = serial.Serial()
+        self.__portConnectStatus = 0
 
     # End of constructor
 
@@ -100,6 +104,9 @@ class Connector:
             logger.error("write timeOut")
         except serial.PortNotOpenError:
             logger.error("Port not open, please check!")
+        except serial.SerialException:
+            logger.error("PC doesn't connect Port.")
+            self.__portConnectStatus = 1
         # End of try-catch
 
     # End of Connector::write
@@ -114,23 +121,41 @@ class Connector:
         try:
             data_r = self.__ser.read(mum)
             data_r = [i for i in data_r]
-        except:
+            if len(data_r) != mum:
+                self.__portConnectStatus = 1
+        except serial.SerialException:
             logger.error("ERROR")
+            self.__portConnectStatus = 1
+            #sys.exit()
         # data = [hex(i) for i in data]
         else:
             if not data_r:
                 cmn.print_debug('empty list', PRINT_DEBUG)
                 logger.error('serial read timeout: check if the input power is ON, close the GUI and re-excute.')
-                sys.exit()
+                self.__portConnectStatus = 1
+                #sys.exit()
             return data_r
 
     # End of Connector::readBinaryList
+    @property
+    def portConnectStatus(self):
+        return self.__portConnectStatus
+
+    @portConnectStatus.setter
+    def portConnectStatus(self, status):
+        if status == True:
+            self.__portConnectStatus = 1
+        else:
+            self.__portConnectStatus = 0
 
     def read(self):
         return self.__ser.read()
 
     def readInputBuffer(self):
         # print("input buffer: %d" % self.__ser.in_waiting)
+        # if win32.DWORD == 0:
+        #     self.__PortStatus = 1
+        #     return 0
         return self.__ser.in_waiting
 
     # End of Connector::readInputBuffer

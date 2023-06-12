@@ -289,7 +289,7 @@ class mainWindow(QMainWindow):
         sample = 1000
         if not self.press_stop:
             # print(imudata)
-            self.act.date_type = self.top.date_rb.btn_status
+            self.act.date_type = self.top.date_rb.btn_status  # 選擇時間是要用PC還是用GPS的
             self.printBuffer()
             input_buf = self.act.readInputBuffer()
             t0 = time.perf_counter()
